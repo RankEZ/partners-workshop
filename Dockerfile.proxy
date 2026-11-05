@@ -1,0 +1,38 @@
+FROM ubuntu:22.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV container=docker
+
+# sshd + tooling for installing the RankEZ proxy/enroller client
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      systemd systemd-sysv openssh-server cron sudo curl wget ca-certificates iputils-ping net-tools vim nano \
+      python3 python3-pip && \
+    rm -rf /var/lib/apt/lists/*
+
+# Generate SSH host keys
+RUN ssh-keygen -A
+
+# Accounts: super (sudo -> root, the handle account) and oper (low-priv, no sudo)
+RUN useradd -m -s /bin/bash super && \
+    echo 'super:RankEZ123!' | chpasswd && \
+    echo 'super ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers && \
+    useradd -m -s /bin/bash oper && \
+    echo 'oper:RankEZ123!' | chpasswd && \
+    echo 'root:RankEZ123!' | chpasswd
+
+# sshd: allow password + root login
+RUN sed -i 's/^#\?PermitRootLogin.*/PermitRootLogin yes/' /etc/ssh/sshd_config && \
+    sed -i 's/^#\?PasswordAuthentication.*/PasswordAuthentication yes/' /etc/ssh/sshd_config && \
+    sed -i 's/^#\?PermitEmptyPasswords.*/PermitEmptyPasswords no/' /etc/ssh/sshd_config
+
+EXPOSE 22
+
+# Enable sshd + cron so systemd starts them at boot (systemctl-enable symlinks)
+RUN mkdir -p /etc/systemd/system/multi-user.target.wants && \
+    ln -sf /lib/systemd/system/ssh.service  /etc/systemd/system/multi-user.target.wants/ssh.service && \
+    ln -sf /lib/systemd/system/cron.service /etc/systemd/system/multi-user.target.wants/cron.service
+
+# Run systemd as PID 1 so the RankEZ proxy-client installer (which relies on
+# systemctl + crontab) works exactly as it would on a real server.
+STOPSIGNAL SIGRTMIN+3
+CMD ["/sbin/init"]
