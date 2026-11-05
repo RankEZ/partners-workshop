@@ -142,6 +142,22 @@ docker load < partners-workshop-images.tar.gz
 docker compose up -d --build
 ```
 
+### Windows (PowerShell)
+
+Use the PowerShell initializer instead — identical behaviour and output:
+
+```powershell
+.\init-lab.ps1            # prompts for the partner ID
+#  or pin it non-interactively:
+.\init-lab.ps1 1
+
+docker compose up -d --build
+```
+
+If PowerShell blocks the script (default execution policy), run it once with
+`powershell -ExecutionPolicy Bypass -File .\init-lab.ps1`, or relax the policy
+for the current user with `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`.
+
 `init-lab.sh` writes `.env` (git-ignored — don't commit it) and a
 `partner-${PARTNER_ID}.txt` cheat sheet (also git-ignored):
 
@@ -230,6 +246,7 @@ partners-workshop/
 ├── web-app/app.py             # Flask login + dashboard app; session login against the users table, reads /data/db-config.txt every request
 ├── init-sql/01_seed.sql       # seeds customer_db (customers + users + orders tables + grants)
 ├── init-lab.sh                # prompts for partner ID, writes .env + cheat-sheet file
+├── init-lab.ps1               # Windows PowerShell equivalent of init-lab.sh
 ├── .gitignore                 # ignores .env, partner-*.txt, tarballs, pycache
 ├── .env                       # created by init-lab.sh (do NOT commit)
 └── README.md
