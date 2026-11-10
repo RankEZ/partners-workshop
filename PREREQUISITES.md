@@ -37,9 +37,9 @@ itself is a set of containers; the host OS only needs to run Docker.
 
 ## 3. Network & ports
 
-- **Internet access to Docker Hub** — the lab pulls two public images:
-  `mysql:8.0` (~600 MB) and `ubuntu:22.04`. *(No Docker Hub access? Ask the
-  organizer for the offline tarball — see DISTRIBUTION.md.)*
+- **Internet access** — the lab connects to the hosted **RankEZ SaaS (grKey)**
+  portal and pulls two public images:
+  `mysql:8.0` (~600 MB) and `ubuntu:22.04`. 
 - **Free TCP ports on the host**:
   - `8080` — the web portal (published from the container's port 80).
   - `2200N` — SSH to the proxy target (`N` = your partner ID).

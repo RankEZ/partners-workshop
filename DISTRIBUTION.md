@@ -1,5 +1,11 @@
 # Distribution — Shipping the Lab to Partners
 
+> **Internet is required in all cases.** The lab talks to the hosted **RankEZ
+> SaaS (grKey)** portal during the workshop, so every attendee needs outbound
+> internet access regardless of how the images are delivered. The sections
+> below only affect *how Docker images reach the partner* — none of them remove
+> the grKey SaaS dependency.
+
 Three ways to hand the lab over. **Source is the default** — the two custom
 images are tiny, and the two large base images are already public.
 
@@ -35,9 +41,11 @@ Then swap the two `build:` blocks for `image:` in `docker-compose.yml` (drop
 `context`/`dockerfile`). They still pull `mysql:8.0` + `ubuntu:22.04` from Docker
 Hub unless you mirror those too.
 
-## 3. Fully offline / air-gapped
+## 3. Offline image delivery (air-gapped *images only*)
 
-If the partner has **no Docker Hub access**, hand over tarballs:
+If the partner has **no Docker Hub access**, hand over tarballs. Note this only
+removes the Docker Hub dependency — the partner still needs internet to reach
+the **grKey SaaS** portal during the lab.
 
 ```bash
 # on your side:

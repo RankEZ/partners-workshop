@@ -14,7 +14,7 @@ SSH ports**, with the web portal always published on host port **8080**.
 |-----|---------|
 | **[PREREQUISITES.md](PREREQUISITES.md)** | What you need installed *before* the workshop — attention, **attendees** |
 | **[LAB-GUIDE.md](LAB-GUIDE.md)** | Architecture, RankEZ mapping, credentials, and the hands-on flow |
-| **[DISTRIBUTION.md](DISTRIBUTION.md)** | How to ship this to partners (source / prebuilt / air-gapped) — for **organizers** |
+| **[DISTRIBUTION.md](DISTRIBUTION.md)** | How to ship this to partners (source / prebuilt / image-only offline) — for **organizers** |
 | **[TROUBLESHOOTING.md](TROUBLESHOOTING.md)** | Common failures and fixes |
 
 ---
