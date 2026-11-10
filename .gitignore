@@ -8,6 +8,9 @@ partner-*.txt
 *.tar
 *.tar.gz
 
+# Internal email template (not for the public repo)
+EMAIL-TEMPLATE.md
+
 # macOS
 .DS_Store
 
